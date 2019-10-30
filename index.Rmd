@@ -1,0 +1,34 @@
+---
+output:
+  xaringan::moon_reader:
+    css: ["default", "gds.css", "gds-fonts.css"]
+    seal: false
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+class: title-slide, bottom
+
+.bold[Matt Dray]
+
+Associate Data Scientist
+
+Government Digital Service
+
+[@mattdray](https://www.twitter.com/mattdray) | [rostrum.blog](https://rostrum.blog)
+---
+class: inverse, middle
+
+Making an R package the easy way
+---
+class: title-slide, bottom
+
+.bold[Thanks!]
+
+<br>
+
+Matt Dray
+
+[@mattdray](https://www.twitter.com/mattdray) | [rostrum.blog](https://rostrum.blog)
