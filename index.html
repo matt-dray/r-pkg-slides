@@ -22,15 +22,17 @@ Government Digital Service
 ---
 class: inverse, middle
 
-Make an R package the easy way
+Make an R package 
+
+the easy way
 ???
 * What do I mean by easy?
-* I mean you can write the whole thing from scratch, which uses multiple files and languages
+* You can write the whole thing from scratch, which uses multiple files and languages
 * Or you can use some shortcuts thanks to some packages
 ---
 class: middle
 
-Name these cats
+But first: name these cats
 &lt;center&gt;&lt;img src='img/cat_tweet.png'&gt;&lt;/center&gt;
 ???
 * Ossie (left) and Evie (right): the Cabinet Office cats
@@ -43,7 +45,8 @@ Who has:
 * used R?
 * written a function?
 * written a package?
-* used {usethis} to write a package?
+???
+* 
 ---
 class: middle
 
@@ -51,10 +54,10 @@ What _is_ a function?
 
 Why make one?
 ???
-* A command that does a thing
-* Prevents you repeating yourself
-* Abstracts away a bunch of code
-* Written in a special format
+* A command that does a thing, like `read.csv()`
+* Provide arguments to inform its behaviour, like `read.csv(file = "data.csv")`
+* Prevents you repeating yourself and abstracts away a bunch of code
+* You can write your own functions with the `function() {}` syntax
 ---
 class: middle
 
@@ -63,9 +66,10 @@ What _is_ a package?
 Why make one?
 ???
 * A collection of functions (usually)
+* Practically, it's a folder containing code, documentation and some other special files in a particular format
 * Themed to perform certain type of task (usually), like plotting
-* You use them all the time; basically anything in the form `x()`
-* You pass arguments to supply information for the function to work or to alter its behaviour
+* Shareable (via a GitHub repository, published on CRAN, or even as a zipped folder)
+* You can write your own packages, but 
 ---
 class: inverse, middle
 background-image: url("img/hex_small.jpg")
@@ -77,13 +81,13 @@ background-size: cover
 ---
 class: inverse, middle
 
-Minimal example
+Minimal example: {cabinet}
 ???
-* Let's build a simple, pointless package to illustrate the process
+* Let's build a simple, (nearly) pointless package to illustrate the process
 ---
 class: middle
 
-Install and load packages
+Packages to help make packages
 
 
 ```r
@@ -92,13 +96,14 @@ install.packages("devtools", "usethis")
 library(devtools)
 library(usethis)
 ```
+&lt;center&gt;&lt;img src="img/devtools.svg" width=200&gt;&lt;img src="img/usethis.png" width=200&gt;&lt;/center&gt;
 ???
 * {devtools} is a general purpose package for developing packages
 * {usethis} is a package of functions for setting up your own package
 ---
 class: middle
 
-Generate package folder and content with `create_package()`
+Create package folder and files 📁
 
 
 ```r
@@ -121,31 +126,31 @@ usethis::create_package("~/Desktop/cabinet")
 ---
 class: middle
 
-The file tree produced by `create_package()`
+The resulting file structure
 
 
 ```r
 cabinet/
   ├── man/
-  ├── R/
+* ├── R/
   ├── cabinet.Rproj
-  ├── DESCRIPTION
+* ├── DESCRIPTION
   └── NAMESPACE
 ```
 ???
 * This is the basic package folder skeleton created by `create_package()`
 * We can add to/edit `R/` and `DESCRIPTION`
 * Don't touch `man/` and `NAMESPACE`; we can use functions later to fill these for us
+* There are some hidden files added too; we don't need to worry about these for now
 ---
 class: middle
 
-Create a script file for functions with `use_r()`
+Create a script file for functions
 
 
 ```r
 usethis::use_r("felines")
 
-# ✔ Setting active project to '/Users/matthewdray/Desktop/cabinet'
 # ● Modify 'R/felines.R'
 ```
 ???
@@ -157,7 +162,7 @@ usethis::use_r("felines")
 ---
 class: middle
 
-`use_r()` created the script file in the `R/` folder
+Script added to `R/`
 
 
 ```r
@@ -169,8 +174,6 @@ cabinet/
   ├── DESCRIPTION
   └── NAMESPACE
 ```
-???
-* Here's where our script file went
 ---
 class: middle
 
@@ -180,6 +183,8 @@ Add functions to `R/felines.R`
 ```r
 cabinet_cat &lt;- function(name) {
 
+  stopifnot(is.character(name))
+  
   if (name %in% c("Ossie", "Evie")) {
     cat(paste(name, "is a good Cabinet Office kitty."))
   } else if (name %in% c("Palmerston", "Larry", "Gladstone")) {
@@ -197,7 +202,7 @@ cabinet_cat &lt;- function(name) {
 ---
 class: middle
 
-Document the package
+Generate documentation 📃
 
 
 ```r
@@ -211,7 +216,7 @@ devtools::document()
 ---
 class: middle
 
-Now you can use the `cabinet_cat()` function from the {cabinet} package! 
+Use the function!
 
 
 ```r
@@ -235,29 +240,27 @@ cabinet_cat("Garfield")
 ---
 class: inverse, middle
 
-Add basic documentation
+Add proper documentation
 ---
 class:middle
 
-Add documentation for:
+Basic approach:
 
-* the package
-* each function
-
-So that `?cabinet` and `?cabinet_cat` call help files
-
----
-class:middle
-
-Documentation theory:
-
-* Edit `DESCRIPTION` &gt; `use_package_doc()` &gt; `document()` &gt; `.Rd` &gt; `?cabinet`
-* Add roxygen &gt; `document()` &gt; `.Rd` &gt; `?cabinet_cat`
-
+1. Write documentation
+1. Run `devtools::document()`
+1. .Rd file generated
+1. Call `?function_name`
 ---
 class: middle
 
-Edit the `DESCRIPTION` file
+Add documentation for:
+
+* the package by editing `DESCRIPTION`
+* each function by adding roxygen
+---
+class: middle
+
+Edit the `DESCRIPTION`
 
 
 ```r
@@ -269,8 +272,8 @@ Version: 0.0.0.9000
 *          family = "Dray",
 *          role = c("aut", "cre"),
 *          email = "matthew.dray@digital.cabinet-office.gov.uk")
-*Description: A package created for a Cabinet Office Coffee &amp; Coding session that
-*   doesn't do anything useful in particular.
+*Description: A package created for a Cabinet Office Coffee &amp; Coding
+*   session that doesn't do anything useful in particular.
 License: What license it uses
 Encoding: UTF-8
 LazyData: true
@@ -280,11 +283,11 @@ RoxygenNote: 6.1.1
 * The `DESCRIPTION` file describes the package: what, who, etc
 * You can adapt and add to this template
 * For now, just update the highlighted lines
-* We can deal with other additions later
+* This will be turned into documentation that will say what the package does
 ---
 class: middle
 
-`use_package_doc()` creates documentation about the package from the `DESCRIPTION`
+Document the `DESCRIPTION`
 
 
 ```r
@@ -296,12 +299,12 @@ devtools::document()
 
 # Updating cabinet documentation
 # Loading cabinet
-# Writing cabinet-package.Rd
+*# Writing cabinet-package.Rd
 ```
 ---
 class: middle
 
-`use_package_doc()` generated an `.Rd` documentation file for the package
+An `.Rd` was generated in `man/`
 
 
 ```r
@@ -317,12 +320,12 @@ cabinet/
 ---
 class: middle
 
-It's in a special format that can be rendered as a help file
+A peek at the `.Rd` file
 
 
 ```r
-% Generated by roxygen2: do not edit by hand
-% Please edit documentation in R/cabinet-package.R
+*% Generated by roxygen2: do not edit by hand
+*% Please edit documentation in R/cabinet-package.R
 \docType{package}
 \name{cabinet-package}
 \alias{cabinet}
@@ -341,10 +344,11 @@ What the package does (one paragraph).
 * It would've been a pain to write this by hand
 * The `.Rd` extension is 'roxygen documentation'
 * It's in a kind of LaTeX implementation
+* This is what the `DESCRIPTION` file was converted to so it can be rendered as a help page
 ---
 class: middle
 
-Add roxygen comments above each function
+Add roxygen above functions to document them
 
 
 ```r
@@ -357,7 +361,13 @@ Add roxygen comments above each function
 #' @examples
 #' cabinet_cat("Evie")
 ```
-
+???
+* Add these lines above the function in `R/felines.R`
+* Possibly the trickiest part of the process, because you may not have seen roxygen before
+* Special comment block (`#'`) followed by `@thing` to provide info about the function
+* Includes title (`@title`), description (`@description`), the arguments (`@param`), etc
+* `@export` is included so that the function is made available to package users (yes, you can have internal package functions that are never exposed to a user!)
+* Other sections that can be added, but we won't worry about those now
 ---
 class: middle
 
@@ -370,13 +380,13 @@ devtools::document()
 # Updating cabinet documentation
 # Loading cabinet
 # Writing NAMESPACE
-# Writing cabinet_cat.Rd
+*# Writing cabinet_cat.Rd
 ```
 
 ---
 class: middle
 
-The function's roxygen code was converted to an `.Rd` documentation file
+The roxygen was converted to `.Rd`
 
 
 ```r
@@ -393,12 +403,340 @@ cabinet/
 ---
 class: middle
 
+See the documentation
+
+
 ```r
 ?cabinet_cat
 ```
-&lt;center&gt;&lt;img src="img/cabinet_cat_docs.png" width=700&gt;&lt;/center&gt;
+&lt;center&gt;&lt;img src="img/cabinet_cat_docs.png" width=500&gt;&lt;/center&gt;
+---
+class: inverse, middle
+
+Add packages to your package
+---
+class: middle
+
+Let's use {glue} instead of `paste()`
 
 
+```r
+cabinet_cat &lt;- function(name) {
+  
+  stopifnot(is.character(name))
+  
+  if (name %in% c("Ossie", "Evie")) {
+*   cat(glue::glue("{name} is a good Cabinet Office kitty."))
+  } else if (name %in% c("Palmerston", "Larry", "Gladstone")) {
+*   cat(glue:glue("{name} isn't a Cabinet Office cat!"))
+  } else {
+    cat("You've much to learn about government cats.")
+  }
+  
+}
+```
+???
+* Use the `package::function` convention
+---
+class: middle
+
+Declare that {glue} is needed on install
+
+
+```r
+usethis::use_package("glue")
+
+*# ✔ Adding 'glue' to Imports field in DESCRIPTION
+# ● Refer to functions with `glue::fun()`
+```
+---
+
+{glue} added to 'Imports' field in `DESCRIPTION`
+
+
+```r
+Package: cabinet
+Title: A Silly Package To Demonstrate How To Build Packages
+Version: 0.0.0.9000
+Authors@R:
+    person(given = "Matt",
+           family = "Dray",
+           role = c("aut", "cre"),
+           email = "matthew.dray@digital.cabinet-office.gov.uk")
+Description: A package created for a Cabinet Office Coffee &amp; Coding 
+    session that doesn't do anything useful in particular.
+License: What license it uses
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.1.1
+*Imports:
+*   glue
+```
+???
+* {glue} wil be installed when {cabinet} is installed
+* If the package isn't on CRAN, you can use 'Remotes' instead of 'Imports'
+* You don't always want to install things on someone else's machine
+* You can use 'Suggests' to suggest, but not install, packages
+* {testthat} is often suggested because it's not usually used in user-facing functions
+---
+class: inverse, middle
+
+Test your functions
+???
+* This session isn't about testing
+* But you can set up testing for your files quickly with {usethis} 
+* You want to make sure that your functions behave as intended
+---
+class: middle
+
+Create directory structure for {testhat}
+
+
+```r
+usethis::use_testthat()
+
+# ✔ Adding 'testthat' to Suggests field in DESCRIPTION
+# ✔ Creating 'tests/testthat/'
+# ✔ Writing 'tests/testthat.R'
+```
+
+Create a test file
+
+
+```r
+usethis::use_test("felines")
+
+# ✔ Writing 'tests/testthat/test-felines.R'
+# ● Modify 'tests/testthat/test-felines.R'
+```
+???
+* {testthat} is a package for writing tests
+* Group your tests into logical groups
+* We've only got one function to test right now
+* The new test file opens automatically
+---
+class: middle
+
+Adding a test ✅
+
+
+```r
+context("test-felines")
+
+test_that("numeric input causes error", {
+  expect_error(cabinet::cabinet_cat(1))
+})
+```
+???
+* What do you think this test does?
+* Write more tests to cover as many possibilities as possible
+* And to cover as much of the code as possible
+---
+class: middle
+
+Run the tests 🆗
+
+
+```r
+devtools::test()
+
+# Loading cabinet
+# Testing cabinet
+# ✔ | OK F W S | Context
+# ✔ |  1       | test-felines [0.1 s]
+# 
+# ══ Results ═════════════════════════════════
+# Duration: 0.1 s
+# 
+# OK:       1
+# Failed:   0
+# Warnings: 0
+# Skipped:  0
+```
+---
+class: inverse, middle
+
+Deliver
+???
+* This session isn't about Git and GitHub
+* But we can put the package under version control and add it to GitHub
+* All without writing any Git code and with minimal navigation of GitHub
+* Requires a GitHub account
+---
+class: middle
+
+Initiate Git, make first commit 
+
+
+```r
+usethis::use_git()
+
+# ✔ Initialising Git repo
+# ✔ Adding '.Rhistory', '.RData' to '.gitignore'
+*# OK to make an initial commit of 7 files?
+# 1: Yes
+# 2: No way
+# 3: Absolutely not
+
+Selection: 1
+
+# ✔ Adding files and committing
+# ● A restart of RStudio is required to activate the Git pane
+# ● Restart now?
+# 1: Not now
+# 2: Negative
+# 3: Yup
+
+Selection: 3
+```
+???
+* Can do `usethis::use_git_ignore(".DS_Store")` to add stuff to gitignore
+---
+class: middle
+
+Configure a Personal Access Token to access the GitHub API 🎫
+
+
+```r
+usethis::browse_github_pat()
+
+# ✔ Opening URL https://github.com/settings/tokens/new?scopes=repo,gist&amp;description=R:GITHUB_PAT
+# ● Call `edit_r_environ()` to open '.Renviron' and store your PAT with a line like:
+#   GITHUB_PAT=xxxyyyzzz
+# ● Make sure '.Renviron' ends with a newline!
+
+usethis::edit_r_environ()
+
+# ● Modify '/Users/matthewdray/.Renviron'
+# ● Restart R for changes to take effect
+```
+???
+* I've already added a PAT to my `.Renviron`
+---
+class: middle
+
+Push the package to GitHub ☁️
+
+
+```r
+usethis::use_github(protocol = "https")
+
+# ● Check title and description
+#   Name:        cabinet
+#   Description: A Silly Package To Demonstrate How To Build Packages
+# Are title and description ok?
+# 1: Not now
+# 2: Definitely
+# 3: No way
+
+Selection: 2
+
+# ✔ Creating GitHub repository
+# ✔ Adding GitHub remote
+# ✔ Adding GitHub links to DESCRIPTION
+# ✔ Setting URL field in DESCRIPTION to 'https://github.com/matt-dray/cabinet'
+# ✔ Setting BugReports field in DESCRIPTION to 'https://github.com/matt-dray/cabinet/issues'
+# ✔ Pushing to GitHub and setting remote tracking branch
+# ✔ Opening URL https://github.com/matt-dray/cabinet
+```
+---
+class: middle
+
+&lt;img src="img/github_repo.png"&gt;
+---
+class: middle
+
+Now it's available to everyone! 🎉
+
+
+```r
+install.packages("remotes")
+remotes::install_github("matt-dray/cabinet")
+```
+---
+class: inverse, middle
+
+Publicise
+---
+class: middle
+
+Add a skeleton README to give an overview of the package 📝
+
+
+```r
+usethis::use_readme_md()
+
+# ✔ Writing 'README.md'
+# ● Modify 'README.md'
+```
+
+---
+class: middle
+
+Add a vignette to explain how to do something
+
+
+```r
+usethis::use_vignette("Check cat names")
+
+# ✔ Adding 'knitr' to Suggests field in DESCRIPTION
+# ✔ Setting VignetteBuilder field in DESCRIPTION to 'knitr'
+# ✔ Adding 'rmarkdown' to Suggests field in DESCRIPTION
+# ✔ Creating 'vignettes/'
+# ✔ Adding '*.html', '*.R' to 'vignettes/.gitignore'
+# ✔ Adding 'inst/doc' to '.gitignore'
+# ✔ Creating 'vignettes/check-cat-names.Rmd'
+# ● Modify 'vignettes/check-cat-names.Rmd'
+```
+---
+class: middle
+
+Install {pkgdown} to create a website for your package
+
+
+```r
+install.packages("pkgdown")
+library(pkgdown)
+```
+
+&lt;center&gt;&lt;img src="img/pkgdown.png" width=200&gt;&lt;/center&gt;
+---
+class: middle
+
+Generate website files in `docs/`
+
+
+```r
+pkgdown::build_site()
+
+# ── Installing package into temporary library ──────────────────────────────────────
+# ══ Building pkgdown site ══════════════════════════════════════════════════════════
+# Reading from: '/Users/matthewdray/Desktop/cabinet'
+# Writing to:   '/Users/matthewdray/Desktop/cabinet/docs'
+# ── Initialising site ──────────────────────────────────────────────────────────────
+# Copying '../../../../Library/Frameworks/R.framework/Versions/3.5/Resources/library/pkgdown/assets/docsearch.css' to 'docsearch.css'
+# 
+# [truncated]
+# 
+# ── Building articles ──────────────────────────────────────────────────────────────
+# Writing 'articles/index.html'
+# Reading 'vignettes/check-cat-names.Rmd'
+# Writing 'articles/check-cat-names.html'
+# ══ DONE ═══════════════════════════════════════════════════════════════════════════
+# ── Previewing site ────────────────────────────────────────────────────────────────
+```
+---
+class: middle
+
+Make it live in the repo settings
+
+&lt;center&gt;&lt;img src="img/github_io.png" width = 600&gt;&lt;center&gt;
+---
+class: middle
+
+We have a live website 🍾
+
+&lt;center&gt;&lt;img src="img/cabinet_pkgdown.png" width = 600&gt;&lt;center&gt;
 ---
 class: title-slide, bottom
 
@@ -409,32 +747,6 @@ class: title-slide, bottom
 Matt Dray
 
 [@mattdray](https://www.twitter.com/mattdray) | [rostrum.blog](https://rostrum.blog)
----
-class: middle
-
-Check package name
-
-
-```r
-available::available("cabinet")
-
-# Urban Dictionary can contain potentially offensive results,
-#   should they be included? [Y]es / [N]o:
-
-1: Y
-
-# ── cabinet ────────────────────────────────────────────────
-# Name valid: ✔
-# Available on CRAN: ✔ 
-# Available on Bioconductor: ✔
-# Available on GitHub:  ✔ 
-# Abbreviations: http://www.abbreviations.com/cabinet
-# Wikipedia: https://en.wikipedia.org/wiki/cabinet
-# Wiktionary: https://en.wiktionary.org/wiki/cabinet
-# Urban Dictionary:
-#   Not found.
-# Sentiment:???
-```
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
