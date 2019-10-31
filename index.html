@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
   <head>
-    <title>index.utf8.md</title>
+    <title>r-pkg-slides</title>
     <meta charset="utf-8" />
     <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="gds.css" type="text/css" />
@@ -32,6 +32,23 @@ the easy way
 ---
 class: middle
 
+📦
+
+Goal: create an R package with {usethis} to make the process easier
+
+---
+class: middle
+
+Some useful tutorials:
+
+* Hilary Parker's [post](https://hilaryparker.com/2014/04/29/writing-an-r-package-from-scratch/) (beginner)
+* Tomas Westlake's [update](https://r-mageddon.netlify.com/post/writing-an-r-package-from-scratch/) (beginner)
+* Karl Broman's [site](https://kbroman.org/pkg_primer/) (intermediate)
+* Hadley Wickham's [book](http://r-pkgs.had.co.nz/) (intermediate/advanced)
+
+---
+class: middle
+
 But first: name these cats
 &lt;center&gt;&lt;img src='img/cat_tweet.png'&gt;&lt;/center&gt;
 ???
@@ -40,13 +57,17 @@ But first: name these cats
 ---
 class: middle
 
+🙋
+
 Who has:
 
 * used R?
 * written a function?
 * written a package?
-???
-* 
+---
+class: inverse, middle
+
+Let's get #deep
 ---
 class: middle
 
@@ -103,14 +124,14 @@ library(usethis)
 ---
 class: middle
 
-Create package folder and files 📁
+Create package folder and files 🆕
 
 
 ```r
 usethis::create_package("~/Desktop/cabinet")
 
 # ✔ Setting active project to '/Users/matthewdray/Desktop/cabinet'
-# ✔ Creating 'R/'
+# ✔ Creating 'R/' 
 # ✔ Creating 'man/'
 # ✔ Writing 'DESCRIPTION'
 # ✔ Writing 'NAMESPACE'
@@ -123,6 +144,7 @@ usethis::create_package("~/Desktop/cabinet")
 * A package is a folder containing a bunch of files; `create_package()` creates these for you
 * Some of the files contain the functions, other files are for documentation, for example
 * If you run the line from within RStudio, it automatically creates an RStudio (.Rproj) file for your new package and opens it
+* I'm using the `package::function()` convention throughout so you know what package each function is from
 ---
 class: middle
 
@@ -140,8 +162,12 @@ cabinet/
 ???
 * This is the basic package folder skeleton created by `create_package()`
 * We can add to/edit `R/` and `DESCRIPTION`
+# `R/` is where our function scripts will go
+* `DESCRIPTION` is where information about the package goes
 * Don't touch `man/` and `NAMESPACE`; we can use functions later to fill these for us
-* There are some hidden files added too; we don't need to worry about these for now
+* `man/` is where documentation (in a special format) will live
+* `NAMESPACE` is a sort-of 'lookup' for object names
+* There were some hidden files added too (`.gitignore` and `.buildignore` that we don't need to worry about now)
 ---
 class: middle
 
@@ -162,7 +188,7 @@ usethis::use_r("felines")
 ---
 class: middle
 
-Script added to `R/`
+Script added to `R/`!
 
 
 ```r
@@ -177,7 +203,7 @@ cabinet/
 ---
 class: middle
 
-Add functions to `R/felines.R`
+Add functions to `R/felines.R` 👨‍💻
 
 
 ```r
@@ -202,7 +228,7 @@ cabinet_cat &lt;- function(name) {
 ---
 class: middle
 
-Generate documentation 📃
+Generate documentation 📜
 
 
 ```r
@@ -216,7 +242,7 @@ devtools::document()
 ---
 class: middle
 
-Use the function!
+Use the function! 🐈
 
 
 ```r
@@ -240,23 +266,27 @@ cabinet_cat("Garfield")
 ---
 class: inverse, middle
 
-Add proper documentation
+Add internal documentation
+???
+* What do I mean by internal documentation?
+* I mean the documentation that can be accessed throgh the package with `help(function)` or `?function`
+* Documentation that isn't obvious to the outside world
 ---
 class:middle
 
 Basic approach:
 
-1. Write documentation
+1. Write text in certain places
 1. Run `devtools::document()`
-1. .Rd file generated
-1. Call `?function_name`
+1. `.Rd` file generated
+1. Call `?function_name` as needed
 ---
 class: middle
 
 Add documentation for:
 
 * the package by editing `DESCRIPTION`
-* each function by adding roxygen
+* each function by editing `.R` files
 ---
 class: middle
 
@@ -265,7 +295,7 @@ Edit the `DESCRIPTION`
 
 ```r
 Package: cabinet
-*Title: A Silly Package To Demonstrate How To Build Packages
+*Title: A Package To Show How To Create Packages
 Version: 0.0.0.9000
 *Authors@R:
 *   person(given = "Matt",
@@ -287,7 +317,7 @@ RoxygenNote: 6.1.1
 ---
 class: middle
 
-Document the `DESCRIPTION`
+Start documenting the package by altering the `DESCRIPTION`
 
 
 ```r
@@ -304,7 +334,7 @@ devtools::document()
 ---
 class: middle
 
-An `.Rd` was generated in `man/`
+An `.Rd` was generated in `man/`!
 
 
 ```r
@@ -317,6 +347,10 @@ cabinet/
   ├── DESCRIPTION
   └── NAMESPACE
 ```
+???
+* .Rd files are the ones that R interprets as documentation
+* These are generated when we run `devtools::document()`
+* It turns the format of the `DESCRIPTION` file into the format in an `.Rd`
 ---
 class: middle
 
@@ -330,12 +364,13 @@ A peek at the `.Rd` file
 \name{cabinet-package}
 \alias{cabinet}
 \alias{cabinet-package}
-\title{cabinet: What the Package Does (One Line, Title Case)}
+\title{cabinet: A Package To Show How To Create Packages}
 \description{
-What the package does (one paragraph).
+A package created for a Cabinet Office Coffee &amp; Coding
+    session that doesn't do anything useful in particular.
 }
 \author{
-\strong{Maintainer}: First Last \email{first.last@example.com}
+\strong{Maintainer}: Matt Dray \email{matthew.dray@digital.cabinet-office.gov.uk}
 
 }
 \keyword{internal}
@@ -348,7 +383,7 @@ What the package does (one paragraph).
 ---
 class: middle
 
-Add roxygen above functions to document them
+Add roxygen comments above functions to document them
 
 
 ```r
@@ -386,7 +421,7 @@ devtools::document()
 ---
 class: middle
 
-The roxygen was converted to `.Rd`
+The roxygen was also converted to `.Rd`
 
 
 ```r
@@ -403,13 +438,19 @@ cabinet/
 ---
 class: middle
 
-See the documentation
+Now you can see documentation
 
 
 ```r
 ?cabinet_cat
+
+# Rendering development documentation for 'cabinet_cat'
 ```
 &lt;center&gt;&lt;img src="img/cabinet_cat_docs.png" width=500&gt;&lt;/center&gt;
+???
+* This will appear in the 'help' pane of RStudio
+* Now people can see what the function is for
+* And see what the arguments are and how to use it
 ---
 class: inverse, middle
 
@@ -440,7 +481,7 @@ cabinet_cat &lt;- function(name) {
 ---
 class: middle
 
-Declare that {glue} is needed on install
+Add {glue} to the package
 
 
 ```r
@@ -451,12 +492,12 @@ usethis::use_package("glue")
 ```
 ---
 
-{glue} added to 'Imports' field in `DESCRIPTION`
+Package name added to 'Imports' in `DESCRIPTION`
 
 
 ```r
 Package: cabinet
-Title: A Silly Package To Demonstrate How To Build Packages
+Title: A Package To Show How To Create Packages
 Version: 0.0.0.9000
 Authors@R:
     person(given = "Matt",
@@ -473,10 +514,10 @@ RoxygenNote: 6.1.1
 *   glue
 ```
 ???
-* {glue} wil be installed when {cabinet} is installed
+* So {glue} wil be installed when {cabinet} is installed
 * If the package isn't on CRAN, you can use 'Remotes' instead of 'Imports'
 * You don't always want to install things on someone else's machine
-* You can use 'Suggests' to suggest, but not install, packages
+* You can use 'Suggests' to suggest packages instead
 * {testthat} is often suggested because it's not usually used in user-facing functions
 ---
 class: inverse, middle
@@ -517,7 +558,7 @@ usethis::use_test("felines")
 ---
 class: middle
 
-Adding a test ✅
+Add a test to `R/test-felines.R` ✅
 
 
 ```r
@@ -556,7 +597,7 @@ devtools::test()
 ---
 class: inverse, middle
 
-Deliver
+Share the package
 ???
 * This session isn't about Git and GitHub
 * But we can put the package under version control and add it to GitHub
@@ -573,7 +614,7 @@ usethis::use_git()
 
 # ✔ Initialising Git repo
 # ✔ Adding '.Rhistory', '.RData' to '.gitignore'
-*# OK to make an initial commit of 7 files?
+*# OK to make an initial commit of 8 files?
 # 1: Yes
 # 2: No way
 # 3: Absolutely not
@@ -623,8 +664,8 @@ usethis::use_github(protocol = "https")
 
 # ● Check title and description
 #   Name:        cabinet
-#   Description: A Silly Package To Demonstrate How To Build Packages
-# Are title and description ok?
+#   Description: A Package To Show How To Create Packages
+*# Are title and description ok?
 # 1: Not now
 # 2: Definitely
 # 3: No way
@@ -633,8 +674,8 @@ Selection: 2
 
 # ✔ Creating GitHub repository
 # ✔ Adding GitHub remote
-# ✔ Adding GitHub links to DESCRIPTION
-# ✔ Setting URL field in DESCRIPTION to 'https://github.com/matt-dray/cabinet'
+*# ✔ Adding GitHub links to DESCRIPTION
+*# ✔ Setting URL field in DESCRIPTION to 'https://github.com/matt-dray/cabinet'
 # ✔ Setting BugReports field in DESCRIPTION to 'https://github.com/matt-dray/cabinet/issues'
 # ✔ Pushing to GitHub and setting remote tracking branch
 # ✔ Opening URL https://github.com/matt-dray/cabinet
@@ -653,14 +694,22 @@ Now it's available to everyone! 🎉
 install.packages("remotes")
 remotes::install_github("matt-dray/cabinet")
 ```
+???
+* {remotes} contains functions for installing packages from remote sources (e.g. GitHub)
+* Supply a string in the form `"username/package"`
+* You can also use it to install from local sources (i.e. a package folder on your machine)
 ---
 class: inverse, middle
 
-Publicise
+Add external documentation 
+???
+* What do I mean by external documentation?
+* I mean the documentation that can be accessed by the outside world
+* Via the internet, basically
 ---
 class: middle
 
-Add a skeleton README to give an overview of the package 📝
+Add a README 📝
 
 
 ```r
@@ -669,29 +718,38 @@ usethis::use_readme_md()
 # ✔ Writing 'README.md'
 # ● Modify 'README.md'
 ```
-
+???
+* This is added to the project home directory
+* It's partially pre-filled to give you an idea of what the content should be
+* File will open automatically in RStudio for editing
+* I've called this 'external' because it gets rendered nicely as a sort of 'homepage' for the package on GitHub
 ---
 class: middle
 
-Add a vignette to explain how to do something
+Add walkthrough 'vignettes'
 
 
 ```r
 usethis::use_vignette("Check cat names")
 
-# ✔ Adding 'knitr' to Suggests field in DESCRIPTION
+*# ✔ Adding 'knitr' to Suggests field in DESCRIPTION
 # ✔ Setting VignetteBuilder field in DESCRIPTION to 'knitr'
-# ✔ Adding 'rmarkdown' to Suggests field in DESCRIPTION
+*# ✔ Adding 'rmarkdown' to Suggests field in DESCRIPTION
 # ✔ Creating 'vignettes/'
 # ✔ Adding '*.html', '*.R' to 'vignettes/.gitignore'
 # ✔ Adding 'inst/doc' to '.gitignore'
 # ✔ Creating 'vignettes/check-cat-names.Rmd'
-# ● Modify 'vignettes/check-cat-names.Rmd'
+*# ● Modify 'vignettes/check-cat-names.Rmd'
 ```
+???
+* This creates an R Markdown file in `vignettes/`
+* Adds packages for rendering the R Markdown file to 'Suggests' in the `DESCRIPTION`
+* File will open automatically in RStudio for editing
+* Vignettes are arguably 'internal', but we're going to expose them on the internet
 ---
 class: middle
 
-Install {pkgdown} to create a website for your package
+Install {pkgdown} for website
 
 
 ```r
@@ -700,6 +758,9 @@ library(pkgdown)
 ```
 
 &lt;center&gt;&lt;img src="img/pkgdown.png" width=200&gt;&lt;/center&gt;
+???
+* The ultimate external reference for your package
+* Your documented files are spun into a website that you can host on github.io from a GitHub repo, for example
 ---
 class: middle
 
@@ -737,6 +798,44 @@ class: middle
 We have a live website 🍾
 
 &lt;center&gt;&lt;img src="img/cabinet_pkgdown.png" width = 600&gt;&lt;center&gt;
+---
+class: inverse, middle
+
+Recap
+
+---
+class: middle
+
+So, we:
+
+* created a package from scratch
+* documented it (internally)
+* set up tests
+* version-controlled it
+* made it available openly on GitHub
+* documented it (externally)
+* built a website for it
+---
+class: middle
+
+Final structure
+
+
+```r
+cabinet/
+  ├── .gitignore
+  ├── .buildignore
+  ├── cabinet.Rproj
+  ├── DESCRIPTION
+  ├── docs/
+  ├── man/
+  ├── NAMESPACE
+  ├── R/
+  ├── tests/
+  ├── README.md
+  └── vignettes/
+```
+
 ---
 class: title-slide, bottom
 
