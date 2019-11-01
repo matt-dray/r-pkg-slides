@@ -102,9 +102,11 @@ background-size: cover
 ---
 class: inverse, middle
 
-Minimal example: {cabinet}
+Minimal package example
 ???
 * Let's build a simple, (nearly) pointless package to illustrate the process
+* It's going to start out _very_ simple; just a single function
+* It won't even have full documentation, but we'll add it later
 ---
 class: middle
 
@@ -129,14 +131,14 @@ Create package folder and files `r emo::ji("new")`
 usethis::create_package("~/Desktop/cabinet")
 
 # ✔ Setting active project to '/Users/matthewdray/Desktop/cabinet'
-# ✔ Creating 'R/' 
-# ✔ Creating 'man/'
-# ✔ Writing 'DESCRIPTION'
-# ✔ Writing 'NAMESPACE'
+# ✔ Creating 'R/' #<<
+# ✔ Creating 'man/' #<<
+# ✔ Writing 'DESCRIPTION' #<<
+# ✔ Writing 'NAMESPACE' #<<
 # ✔ Writing 'cabinet.Rproj'
 # ✔ Adding '.Rproj.user' to '.gitignore'
 # ✔ Adding '^cabinet\\.Rproj$', '^\\.Rproj\\.user$' to '.Rbuildignore'
-# ✔ Opening new project 'cabinet' in RStudio
+# ✔ Opening new project 'cabinet' in RStudio #<<
 ```
 ???
 * A package is a folder containing a bunch of files; `create_package()` creates these for you
@@ -206,11 +208,11 @@ cabinet_cat <- function(name) {
   stopifnot(is.character(name))
   
   if (name %in% c("Ossie", "Evie")) {
-    cat(paste(name, "is a good Cabinet Office kitty."))
+    print(paste(name, "is a good Cabinet Office kitty."))
   } else if (name %in% c("Palmerston", "Larry", "Gladstone")) {
-    cat(paste(name, "isn't a Cabinet Office cat!"))
+    print(paste(name, "isn't a Cabinet Office cat!"))
   } else {
-    cat("You've much to learn about government cats.")
+    print("You've much to learn about government cats.")
   }
 
 }
@@ -222,16 +224,19 @@ cabinet_cat <- function(name) {
 ---
 class: middle
 
-Generate documentation `r emo::ji("document")`
+Document it `r emo::ji("document")`
 
 ```{r eval=FALSE}
 devtools::document()
 
 # Updating cabinet documentation
 # Updating roxygen version in /Users/matthewdray/Desktop/cabinet/DESCRIPTION
-# Writing NAMESPACE
+# Writing NAMESPACE #<<
 # Loading cabinet
 ```
+???
+* The only real change here is the addition of the function to the `NAMESPACE`
+* Which allows the function to be exposed to the user
 ---
 class: middle
 
@@ -262,7 +267,6 @@ Add internal documentation
 ???
 * What do I mean by internal documentation?
 * I mean the documentation that can be accessed throgh the package with `help(function)` or `?function`
-* Documentation that isn't obvious to the outside world
 ---
 class:middle
 
@@ -331,6 +335,7 @@ cabinet/
   ├── man/
   |   └── cabinet-package.Rd #<<
   ├── R/
+  |   ├── cabinet-package.R #<<
   |   └── felines.R
   ├── cabinet.Rproj
   ├── DESCRIPTION
@@ -371,17 +376,30 @@ A package created for a Cabinet Office Coffee & Coding
 ---
 class: middle
 
-Add roxygen comments above functions to document them
+Add roxygen comments above functions
 
 ```{r}
 #' @title Check For A Cabinet Office Cat
-#'
 #' @description Check whether a name belongs to one of the cats from the UK
 #'     government's Cabinet Office.
-#' @param name A cat name provided as a character string.
-#' @export
+#' @param name A cat name provided as a character string.  #<<
+#' @export  #<<
 #' @examples
 #' cabinet_cat("Evie")
+
+cabinet_cat <- function(name) {
+  
+  stopifnot(is.character(name))
+  
+  if (name %in% c("Ossie", "Evie")) {
+    print(paste(name, "is a good Cabinet Office kitty."))
+  } else if (name %in% c("Palmerston", "Larry", "Gladstone")) {
+    print(paste(name, "isn't a Cabinet Office cat!"))
+  } else {
+    print("You've much to learn about government cats.")
+    
+  }
+}
 ```
 ???
 * Add these lines above the function in `R/felines.R`
@@ -403,7 +421,6 @@ devtools::document()
 # Writing NAMESPACE
 # Writing cabinet_cat.Rd  #<<
 ```
-
 ---
 class: middle
 
@@ -415,6 +432,7 @@ cabinet/
   |   ├── cabinet-package.Rd
   |   └── cabinet_cat.Rd #<<
   ├── R/
+  |   ├──cabinet-package.R
   |   └── felines.R
   ├── cabinet.Rproj
   ├── DESCRIPTION
@@ -438,7 +456,88 @@ Now you can see documentation
 ---
 class: inverse, middle
 
+Add longer-form documentation
+???
+* A README (general package introduction, how to install, etc; useful for GitHub landing page)
+* Focussed vignettes to explain how to do particular tasks
+---
+class: middle
+
+Add a README `r emo::ji("memo")`
+
+```{r eval=FALSE}
+usethis::use_readme_md()
+
+# ✔ Writing 'README.md'
+# ● Modify 'README.md' #<<
+```
+???
+* This is added to the project home directory
+* It's partially pre-filled to give you an idea of what the content should be
+* File will open automatically in RStudio for editing
+* I've called this 'external' because it gets rendered nicely as a sort of 'homepage' for the package on GitHub
+---
+class: middle
+
+Add walkthrough vignettes
+
+```{r eval=FALSE}
+usethis::use_vignette("Check cat names")
+
+# ✔ Adding 'knitr' to Suggests field in DESCRIPTION #<<
+# ✔ Setting VignetteBuilder field in DESCRIPTION to 'knitr'
+# ✔ Adding 'rmarkdown' to Suggests field in DESCRIPTION #<<
+# ✔ Creating 'vignettes/'
+# ✔ Adding '*.html', '*.R' to 'vignettes/.gitignore'
+# ✔ Adding 'inst/doc' to '.gitignore'
+# ✔ Creating 'vignettes/check-cat-names.Rmd'
+# ● Modify 'vignettes/check-cat-names.Rmd' #<<
+```
+???
+* This creates an R Markdown file in `vignettes/`
+* Adds packages for rendering the R Markdown file to 'Suggests' in the `DESCRIPTION`
+* File will open automatically in RStudio for editing
+* Vignettes are arguably 'internal', but we're going to expose them on the internet
+---
+class: middle
+
+You guessed it
+
+```{r eval=FALSE}
+devtools::document()
+
+# Updating cabinet documentation
+# Writing NAMESPACE
+# Loading cabinet
+# Writing NAMESPACE
+```
+---
+class: middle
+
+The new documentation will help people use the package
+
+```{r eval=FALSE}
+cabinet/
+  ├── man/
+  |   ├── cabinet-package.Rd
+  |   └── cabinet_cat.Rd
+  ├── R/
+  |   ├── cabinet-package.R
+  |   └── felines.R
+  ├── vignettes/ #<<
+  |   └── check-cat-names.Rmd #<<
+  ├── cabinet.Rproj
+  ├── DESCRIPTION
+  ├── NAMESPACE
+  └── README.md #<<
+```
+---
+class: inverse, middle
+
 Add packages to your package
+???
+* I only used base functions in the package
+* What if I want to refer to functions from other packages?
 ---
 class: middle
 
@@ -450,11 +549,11 @@ cabinet_cat <- function(name) {
   stopifnot(is.character(name))
   
   if (name %in% c("Ossie", "Evie")) {
-    cat(glue::glue("{name} is a good Cabinet Office kitty.")) #<<
+    print(glue::glue("{name} is a good Cabinet Office kitty.")) #<<
   } else if (name %in% c("Palmerston", "Larry", "Gladstone")) {
-    cat(glue:glue("{name} isn't a Cabinet Office cat!")) #<<
+    print(glue:glue("{name} isn't a Cabinet Office cat!")) #<<
   } else {
-    cat("You've much to learn about government cats.")
+    print("You've much to learn about government cats.")
   }
   
 }
@@ -517,8 +616,8 @@ Create directory structure for {testhat}
 ```{r eval=FALSE}
 usethis::use_testthat()
 
-# ✔ Adding 'testthat' to Suggests field in DESCRIPTION
-# ✔ Creating 'tests/testthat/'
+# ✔ Adding 'testthat' to Suggests field in DESCRIPTION #<<
+# ✔ Creating 'tests/testthat/'  #<<
 # ✔ Writing 'tests/testthat.R'
 ```
 
@@ -528,7 +627,7 @@ Create a test file
 usethis::use_test("felines")
 
 # ✔ Writing 'tests/testthat/test-felines.R'
-# ● Modify 'tests/testthat/test-felines.R'
+# ● Modify 'tests/testthat/test-felines.R'  #<<
 ```
 ???
 * {testthat} is a package for writing tests
@@ -573,6 +672,20 @@ devtools::test()
 # Skipped:  0
 ```
 ---
+class: middle
+
+Here's what the package section of the `DESCRIPTION` looks like now
+
+```{r eval=FALSE}
+Suggests: #<<
+    knitr, #<<
+    rmarkdown, #<<
+    testthat #<<
+VignetteBuilder: knitr #<<
+Imports:
+    glue
+```
+---
 class: inverse, middle
 
 Share the package
@@ -581,6 +694,32 @@ Share the package
 * But we can put the package under version control and add it to GitHub
 * All without writing any Git code and with minimal navigation of GitHub
 * Requires a GitHub account
+---
+class: middle
+
+Add a license and code of conduct for interacting with your package
+
+```{r eval=FALSE}
+usethis::use_cc0_license("Matt Dray")
+
+# ✔ Setting License field in DESCRIPTION to 'CC0'
+# ✔ Writing 'LICENSE.md'  #<<
+# ✔ Adding '^LICENSE\\.md$' to '.Rbuildignore'
+```
+
+```{r eval=FALSE}
+usethis::use_code_of_conduct()
+
+# ✔ Writing 'CODE_OF_CONDUCT.md'
+# ✔ Adding '^CODE_OF_CONDUCT\\.md$' to '.Rbuildignore'
+# ● Don't forget to describe the code of conduct in your README: #<<
+# Copying code to clipboard:
+#   Please note that the 'cabinet' project is released with a [Contributor Code of Conduct](CODE_OF_CONDUCT.md). By contributing to this project, you agree to abide by its terms.
+```
+???
+* If we're going to share our package, we should set a license and a code of conduct
+* License so people know how to reuse our code
+* Code of conduct so people know how to behave
 ---
 class: middle
 
@@ -647,7 +786,7 @@ usethis::use_github(protocol = "https")
 
 Selection: 2
 
-# ✔ Creating GitHub repository
+# ✔ Creating GitHub repository #<<
 # ✔ Adding GitHub remote
 # ✔ Adding GitHub links to DESCRIPTION #<<
 # ✔ Setting URL field in DESCRIPTION to 'https://github.com/matt-dray/cabinet' #<<
@@ -675,49 +814,7 @@ remotes::install_github("matt-dray/cabinet")
 ---
 class: inverse, middle
 
-Add external documentation 
-???
-* What do I mean by external documentation?
-* I mean the documentation that can be accessed by the outside world
-* Via the internet, basically
----
-class: middle
-
-Add a README `r emo::ji("memo")`
-
-```{r eval=FALSE}
-usethis::use_readme_md()
-
-# ✔ Writing 'README.md'
-# ● Modify 'README.md'
-```
-???
-* This is added to the project home directory
-* It's partially pre-filled to give you an idea of what the content should be
-* File will open automatically in RStudio for editing
-* I've called this 'external' because it gets rendered nicely as a sort of 'homepage' for the package on GitHub
----
-class: middle
-
-Add walkthrough 'vignettes'
-
-```{r eval=FALSE}
-usethis::use_vignette("Check cat names")
-
-# ✔ Adding 'knitr' to Suggests field in DESCRIPTION #<<
-# ✔ Setting VignetteBuilder field in DESCRIPTION to 'knitr'
-# ✔ Adding 'rmarkdown' to Suggests field in DESCRIPTION #<<
-# ✔ Creating 'vignettes/'
-# ✔ Adding '*.html', '*.R' to 'vignettes/.gitignore'
-# ✔ Adding 'inst/doc' to '.gitignore'
-# ✔ Creating 'vignettes/check-cat-names.Rmd'
-# ● Modify 'vignettes/check-cat-names.Rmd' #<<
-```
-???
-* This creates an R Markdown file in `vignettes/`
-* Adds packages for rendering the R Markdown file to 'Suggests' in the `DESCRIPTION`
-* File will open automatically in RStudio for editing
-* Vignettes are arguably 'internal', but we're going to expose them on the internet
+Publicise!
 ---
 class: middle
 
@@ -759,7 +856,7 @@ pkgdown::build_site()
 ---
 class: middle
 
-Make it live in the repo settings
+Push changes and go to repo settings
 
 <center><img src="img/github_io.png" width = 600><center>
 ---
@@ -767,7 +864,7 @@ class: middle
 
 We have a live website `r emo::ji("champagne")`
 
-<center><img src="img/cabinet_pkgdown.png" width = 600><center>
+<center><img src="img/cabinet_pkgdown.png" width=600><center>
 ---
 class: inverse, middle
 
@@ -779,32 +876,34 @@ class: middle
 So, we:
 
 * created a package from scratch
-* documented it (internally)
+* documented it internally
+* wrote some long-form documentation
 * set up tests
-* version-controlled it
+* set up version control
 * made it available openly on GitHub
-* documented it (externally)
 * built a website for it
 ---
 class: middle
 
-Final structure
+Final folder structure
 
 ```{r eval=FALSE}
 cabinet/
   ├── .gitignore
   ├── .buildignore
   ├── cabinet.Rproj
-  ├── DESCRIPTION
+  ├── DESCRIPTION #<<
   ├── docs/
-  ├── man/
-  ├── NAMESPACE
-  ├── R/
+  ├── man/ #<<
+  ├── NAMESPACE #<<
+  ├── R/ #<<
   ├── tests/
   ├── README.md
   └── vignettes/
 ```
-
+???
+* This grew from the basic `DESCRIPTION`, `NAMESPACE`, `R/` and `man/`
+* But we didn't really have to think about it; we used {usethis} to help
 ---
 class: title-slide, bottom
 
