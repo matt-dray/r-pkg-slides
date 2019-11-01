@@ -20,6 +20,15 @@ Government Digital Service
 
 [@mattdray](https://www.twitter.com/mattdray) | [rostrum.blog](https://rostrum.blog)
 ---
+class: middle
+
+When using these slides you can:
+
+* press 'C' to clone them in a new window
+* press 'P' for presenter notes
+* press 'H' for other shortcuts
+
+---
 class: inverse, middle
 
 Make an R package 
@@ -551,7 +560,7 @@ cabinet_cat <- function(name) {
   if (name %in% c("Ossie", "Evie")) {
     print(glue::glue("{name} is a good Cabinet Office kitty.")) #<<
   } else if (name %in% c("Palmerston", "Larry", "Gladstone")) {
-    print(glue:glue("{name} isn't a Cabinet Office cat!")) #<<
+    print(glue::glue("{name} isn't a Cabinet Office cat!")) #<<
   } else {
     print("You've much to learn about government cats.")
   }
@@ -904,6 +913,14 @@ cabinet/
 ???
 * This grew from the basic `DESCRIPTION`, `NAMESPACE`, `R/` and `man/`
 * But we didn't really have to think about it; we used {usethis} to help
+---
+Class: middle
+
+You can: 
+
+* find the package on GitHub: https://github.com/matt-dray/cabinet
+* look at the {pkgdown} website: https://matt-dray.github.io/cabinet/
+* install the package on your machine with `remotes::install_github("matt-dray/cabinet")` and using the function `cabinet::cabinet_cat("Ossie")`
 ---
 class: title-slide, bottom
 
