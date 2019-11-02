@@ -12,6 +12,7 @@ You can:
 
 * [see the slides in your browser](https://matt-dray.github.io/r-pkg-slides/)
 * explore the source code for the slides in this repo
+* [read an accompanying blog post](https://www.rostrum.blog/2019/11/01/usethis/)
 
 ## The package
 
@@ -20,5 +21,6 @@ In the session I'll live-build a package called {cabinet} and push it to GitHub.
 * look at the [source code](https://github.com/matt-dray/cabinet/)
 * see the package's [website](https://matt-dray.github.io/cabinet/), made with {pkgdown}
 * install the package with `remotes::install_github("matt-dray/cabinet")`
+* run the `cabinet_cat()` function to find out if a supplied charcter string matches the name of a cat that lives at the [Cabinet Office](https://www.gov.uk/government/organisations/cabinet-office)
 
 But don't install it because it's silly.
