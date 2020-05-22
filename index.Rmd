@@ -14,46 +14,48 @@ class: title-slide, bottom
 
 .bold[Matt Dray]
 
-Associate Data Scientist
-
-Government Digital Service
-
-[@mattdray](https://www.twitter.com/mattdray) | [rostrum.blog](https://rostrum.blog)
----
-class: middle
-
-When using these slides you can:
-
-* press 'C' to clone them in a new window
-* press 'P' for presenter notes
-* press 'H' for other shortcuts
+<p style="font-size:30px;">
+`r icon::fa('twitter')` [@mattdray](https://twitter.com/mattdray) | 
+`r icon::fa('github')` [matt-dray](https://github.com/matt-dray) |
+`r icon::fa('globe')` [rostrum.blog](https://www.rostrum.blog/) 
+<p>
+<p style="font-size:20px;">
+`r icon::fa('info')` 
+[Blog post](https://www.rostrum.blog/2019/11/01/usethis/) | 
+[Slide source](https://github.com/matt-dray/r-pkg-slides) | 
+[Session details](https://co-analysis.github.io/co-coffee-and-coding/session_2019-11-01_r-package-usethis.html)
+<p>
+<p style="font-size:20px;">
+`r icon::fa('keyboard')` Press &#8592; &#8594; to navigate, P for presenter notes, F for full screen
+<p>
 
 ---
 class: inverse, middle
 
-Make an R package 
+Easier R packages with {usethis}
 
-the easy way
 ???
 * What do I mean by easy?
 * You can write the whole thing from scratch, which uses multiple files and languages
 * Or you can use some shortcuts thanks to some packages
+
 ---
 class: middle
 
 `r emo::ji("package")`
 
-Goal: create an R package with {usethis} to make the process easier
+Goal: create an R package quickly and simply with {usethis}
 
 ---
 class: middle
 
 Some useful tutorials:
 
-* Hilary Parker's [post](https://hilaryparker.com/2014/04/29/writing-an-r-package-from-scratch/) (beginner)
-* Tomas Westlake's [update](https://r-mageddon.netlify.com/post/writing-an-r-package-from-scratch/) (beginner)
-* Karl Broman's [site](https://kbroman.org/pkg_primer/) (intermediate)
-* Hadley Wickham's [book](http://r-pkgs.had.co.nz/) (intermediate/advanced)
+* Hilary Parker's [post](https://hilaryparker.com/2014/04/29/writing-an-r-package-from-scratch/)
+* Tomas Westlake's [update](https://r-mageddon.netlify.com/post/writing-an-r-package-from-scratch/)
+* Emil Hvitfeldt’s {usethis} [post](https://www.hvitfeldt.me/blog/usethis-workflow-for-package-development/)
+* Karl Broman's [site](https://kbroman.org/pkg_primer/)
+* Hadley Wickham's [book](http://r-pkgs.had.co.nz/)
 
 ---
 class: middle
@@ -884,13 +886,13 @@ class: middle
 
 So, we:
 
-* created a package from scratch
-* documented it internally
-* wrote some long-form documentation
-* set up tests
-* set up version control
-* made it available openly on GitHub
-* built a website for it
+1. Created a package from scratch
+1. Documented it internally
+1. Wrote some long-form documentation
+1. Set up tests
+1. Set up version control
+1. Made it available openly on GitHub
+1. Built a website for it
 ---
 class: middle
 
@@ -918,9 +920,14 @@ Class: middle
 
 You can: 
 
-* find the package on GitHub: https://github.com/matt-dray/cabinet
-* look at the {pkgdown} website: https://matt-dray.github.io/cabinet/
-* install the package on your machine with `remotes::install_github("matt-dray/cabinet")` and using the function `cabinet::cabinet_cat("Ossie")`
+* find the package [on GitHub](https://github.com/matt-dray/cabinet)
+* look at [the package website](https://matt-dray.github.io/cabinet/)
+* install the package and run the function with:
+
+```{reval=FALSE}
+remotes::install_github("matt-dray/cabinet")`
+cabinet::cabinet_cat("Ossie")
+```
 ---
 class: title-slide, bottom
 
@@ -928,6 +935,14 @@ class: title-slide, bottom
 
 <br>
 
-Matt Dray
-
-[@mattdray](https://www.twitter.com/mattdray) | [rostrum.blog](https://rostrum.blog)
+<p style="font-size:30px;">
+`r icon::fa('twitter')` [@mattdray](https://twitter.com/mattdray) | 
+`r icon::fa('github')` [matt-dray](https://github.com/matt-dray) |
+`r icon::fa('globe')` [rostrum.blog](https://www.rostrum.blog/) 
+<p>
+<p style="font-size:20px;">
+`r icon::fa('info')` 
+[Blog post](https://www.rostrum.blog/2019/11/01/usethis/) | 
+[Slide source](https://github.com/matt-dray/r-pkg-slides) | 
+[Session details](https://co-analysis.github.io/co-coffee-and-coding/session_2019-11-01_r-package-usethis.html)
+<p>

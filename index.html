@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
   <head>
     <title>r-pkg-slides</title>
     <meta charset="utf-8" />
     <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/font-awesome-5.3.1/css/fontawesome-all.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="gds.css" type="text/css" />
     <link rel="stylesheet" href="gds-fonts.css" type="text/css" />
   </head>
@@ -14,46 +15,48 @@ class: title-slide, bottom
 
 .bold[Matt Dray]
 
-Associate Data Scientist
-
-Government Digital Service
-
-[@mattdray](https://www.twitter.com/mattdray) | [rostrum.blog](https://rostrum.blog)
----
-class: middle
-
-When using these slides you can:
-
-* press 'C' to clone them in a new window
-* press 'P' for presenter notes
-* press 'H' for other shortcuts
+&lt;p style="font-size:30px;"&gt;
+<i class="fab  fa-twitter "></i> [@mattdray](https://twitter.com/mattdray) | 
+<i class="fab  fa-github "></i> [matt-dray](https://github.com/matt-dray) |
+<i class="fas  fa-globe "></i> [rostrum.blog](https://www.rostrum.blog/) 
+&lt;p&gt;
+&lt;p style="font-size:20px;"&gt;
+<i class="fas  fa-info "></i> 
+[Blog post](https://www.rostrum.blog/2019/11/01/usethis/) | 
+[Slide source](https://github.com/matt-dray/r-pkg-slides) | 
+[Session details](https://co-analysis.github.io/co-coffee-and-coding/session_2019-11-01_r-package-usethis.html)
+&lt;p&gt;
+&lt;p style="font-size:20px;"&gt;
+<i class="fas  fa-keyboard "></i> Press &amp;#8592; &amp;#8594; to navigate, P for presenter notes, F for full screen
+&lt;p&gt;
 
 ---
 class: inverse, middle
 
-Make an R package 
+Easier R packages with {usethis}
 
-the easy way
 ???
 * What do I mean by easy?
 * You can write the whole thing from scratch, which uses multiple files and languages
 * Or you can use some shortcuts thanks to some packages
+
 ---
 class: middle
 
 📦
 
-Goal: create an R package with {usethis} to make the process easier
+Goal: create an R package quickly and simply with {usethis}
 
 ---
 class: middle
 
 Some useful tutorials:
 
-* Hilary Parker's [post](https://hilaryparker.com/2014/04/29/writing-an-r-package-from-scratch/) (beginner)
-* Tomas Westlake's [update](https://r-mageddon.netlify.com/post/writing-an-r-package-from-scratch/) (beginner)
-* Karl Broman's [site](https://kbroman.org/pkg_primer/) (intermediate)
-* Hadley Wickham's [book](http://r-pkgs.had.co.nz/) (intermediate/advanced)
+* Hilary Parker's [post](https://hilaryparker.com/2014/04/29/writing-an-r-package-from-scratch/)
+* Tomas Westlake's [update](https://r-mageddon.netlify.com/post/writing-an-r-package-from-scratch/)
+* Emil Hvitfeldt’s {usethis} [post](https://www.hvitfeldt.me/blog/usethis-workflow-for-package-development/)
+* Karl Broman's [site](https://kbroman.org/pkg_primer/)
+* Hadley Wickham's [book](http://r-pkgs.had.co.nz/)
 
 ---
 class: middle
@@ -239,7 +242,7 @@ cabinet_cat &lt;- function(name) {
 ---
 class: middle
 
-Document it 📜
+Document it 📝
 
 
 ```r
@@ -919,13 +922,13 @@ class: middle
 
 So, we:
 
-* created a package from scratch
-* documented it internally
-* wrote some long-form documentation
-* set up tests
-* set up version control
-* made it available openly on GitHub
-* built a website for it
+1. Created a package from scratch
+1. Documented it internally
+1. Wrote some long-form documentation
+1. Set up tests
+1. Set up version control
+1. Made it available openly on GitHub
+1. Built a website for it
 ---
 class: middle
 
@@ -954,9 +957,14 @@ Class: middle
 
 You can: 
 
-* find the package on GitHub: https://github.com/matt-dray/cabinet
-* look at the {pkgdown} website: https://matt-dray.github.io/cabinet/
-* install the package on your machine with `remotes::install_github("matt-dray/cabinet")` and using the function `cabinet::cabinet_cat("Ossie")`
+* find the package [on GitHub](https://github.com/matt-dray/cabinet)
+* look at [the package website](https://matt-dray.github.io/cabinet/)
+* install the package and run the function with:
+
+```{reval=FALSE}
+remotes::install_github("matt-dray/cabinet")`
+cabinet::cabinet_cat("Ossie")
+```
 ---
 class: title-slide, bottom
 
@@ -964,9 +972,17 @@ class: title-slide, bottom
 
 &lt;br&gt;
 
-Matt Dray
-
-[@mattdray](https://www.twitter.com/mattdray) | [rostrum.blog](https://rostrum.blog)
+&lt;p style="font-size:30px;"&gt;
+<i class="fab  fa-twitter "></i> [@mattdray](https://twitter.com/mattdray) | 
+<i class="fab  fa-github "></i> [matt-dray](https://github.com/matt-dray) |
+<i class="fas  fa-globe "></i> [rostrum.blog](https://www.rostrum.blog/) 
+&lt;p&gt;
+&lt;p style="font-size:20px;"&gt;
+<i class="fas  fa-info "></i> 
+[Blog post](https://www.rostrum.blog/2019/11/01/usethis/) | 
+[Slide source](https://github.com/matt-dray/r-pkg-slides) | 
+[Session details](https://co-analysis.github.io/co-coffee-and-coding/session_2019-11-01_r-package-usethis.html)
+&lt;p&gt;
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
@@ -1013,9 +1029,35 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     }
     deleted = true;
   });
-})();</script>
-
-<script>
+})();
+(function() {
+  "use strict"
+  /* Replace <script> tags in slides area to make them executable
+   *
+   * Runs after post-processing of markdown source into slides and replaces only
+   * <script>s on the last slide of continued slides using the .has-continuation
+   * class added by xaringan. Finally, any <script>s in the slides area that
+   * aren't executed are commented out.
+   */
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container:not(.has-continuation) script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+  var scriptsNotExecuted = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container.has-continuation script'
+  );
+  if (!scriptsNotExecuted.length) return;
+  for (var i = 0; i < scriptsNotExecuted.length; i++) {
+    var comment = document.createComment(scriptsNotExecuted[i].outerHTML)
+    scriptsNotExecuted[i].parentElement.replaceChild(comment, scriptsNotExecuted[i])
+  }
+})();
 (function() {
   var links = document.getElementsByTagName('a');
   for (var i = 0; i < links.length; i++) {
@@ -1024,7 +1066,23 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     }
   }
 })();
-</script>
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
 
 <script>
 slideshow._releaseMath = function(el) {
